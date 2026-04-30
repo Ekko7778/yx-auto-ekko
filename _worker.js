@@ -1396,6 +1396,7 @@ function generateHomePage(scuValue) {
                     if (tlsEl) tlsEl.classList.add('active');
                 }
             }
+            saveFormState();
         }
         
         
@@ -1585,6 +1586,77 @@ function generateHomePage(scuValue) {
                 }
             }
         }
+        // ========== 表单状态记忆 ==========
+        const STORAGE_KEY = 'ekko_form_state';
+        const textInputIds = ['domain', 'uuid', 'customPath', 'githubUrl', 'customDNS', 'customECHDomain'];
+        const checkboxIds = ['ipv4Enabled', 'ipv6Enabled', 'ispMobile', 'ispUnicom', 'ispTelecom'];
+
+        function saveFormState() {
+            const state = { switches: {}, checkboxes: {}, texts: {} };
+            for (const id in switches) state.switches[id] = switches[id];
+            for (const id of checkboxIds) {
+                const el = document.getElementById(id);
+                if (el) state.checkboxes[id] = el.checked;
+            }
+            for (const id of textInputIds) {
+                const el = document.getElementById(id);
+                if (el) state.texts[id] = el.value;
+            }
+            try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e) {}
+        }
+
+        function restoreFormState() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                if (!raw) return;
+                const state = JSON.parse(raw);
+                if (state.switches) {
+                    for (const id in state.switches) {
+                        if (!(id in switches)) continue;
+                        switches[id] = state.switches[id];
+                        const el = document.getElementById(id);
+                        if (el) el.classList.toggle('active', switches[id]);
+                    }
+                    const echOpt = document.getElementById('echOptionsGroup');
+                    if (echOpt) echOpt.style.display = switches.switchECH ? 'block' : 'none';
+                }
+                if (state.checkboxes) {
+                    for (const id of checkboxIds) {
+                        if (id in state.checkboxes) {
+                            const el = document.getElementById(id);
+                            if (el) el.checked = state.checkboxes[id];
+                        }
+                    }
+                }
+                if (state.texts) {
+                    for (const id of textInputIds) {
+                        if (id in state.texts) {
+                            const el = document.getElementById(id);
+                            if (el) el.value = state.texts[id];
+                        }
+                    }
+                }
+            } catch(e) {}
+        }
+
+        let _saveTimer = null;
+        function debouncedSave() {
+            clearTimeout(_saveTimer);
+            _saveTimer = setTimeout(saveFormState, 300);
+        }
+
+        // 为 checkbox 和文本输入绑定自动保存
+        for (const id of checkboxIds) {
+            const el = document.getElementById(id);
+            if (el) el.addEventListener('change', saveFormState);
+        }
+        for (const id of textInputIds) {
+            const el = document.getElementById(id);
+            if (el) el.addEventListener('input', debouncedSave);
+        }
+
+        // 页面加载时恢复状态
+        restoreFormState();
     </script>
 </body>
 </html>`;
