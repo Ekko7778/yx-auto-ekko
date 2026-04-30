@@ -1123,16 +1123,61 @@ function generateHomePage(scuValue) {
             color: #86868b;
             font-size: 13px;
         }
-        
-        .footer a {
-            color: #007AFF;
-            text-decoration: none;
-            font-weight: 500;
-            transition: opacity 0.2s ease;
+
+        .footer-columns {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            margin-bottom: 20px;
         }
-        
-        .footer a:active {
-            opacity: 0.6;
+
+        .footer-column {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .footer-divider {
+            width: 1px;
+            height: 24px;
+            background: rgba(0, 0, 0, 0.12);
+        }
+
+        .footer-icon-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            color: #86868b;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+
+        .footer-icon-link:hover {
+            color: #1d1d1f;
+            transform: scale(1.1);
+        }
+
+        .footer-icon-link:active {
+            transform: scale(0.95);
+        }
+
+        .footer-icon-link svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .footer-version {
+            font-size: 12px;
+            color: #86868b;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+        }
+
+        .footer-desc {
+            color: #86868b;
+            font-size: 13px;
         }
         
         @media (prefers-color-scheme: dark) {
@@ -1206,11 +1251,19 @@ function generateHomePage(scuValue) {
                 border-color: rgba(0, 122, 255, 0.3) !important;
                 color: #5ac8fa !important;
             }
-            
-            .footer a {
-                color: #5ac8fa !important;
+
+            .footer-icon-link {
+                color: #98989d;
             }
-            
+
+            .footer-icon-link:hover {
+                color: #f5f5f7;
+            }
+
+            .footer-divider {
+                background: rgba(255, 255, 255, 0.15);
+            }
+
         }
     </style>
 </head>
@@ -1363,11 +1416,27 @@ function generateHomePage(scuValue) {
         </div>
         
         <div class="footer">
-            <p>简化版优选工具 • 仅用于节点生成</p>
-            <div style="margin-top: 20px; display: flex; justify-content: center; gap: 24px; flex-wrap: wrap;">
-                <a href="https://github.com/byJoey/yx-auto" target="_blank" style="color: #007aff; text-decoration: none; font-size: 15px; font-weight: 500;">GitHub 项目</a>
-                <a href="https://www.youtube.com/@joeyblog" target="_blank" style="color: #007aff; text-decoration: none; font-size: 15px; font-weight: 500;">YouTube @joeyblog</a>
+            <div class="footer-columns">
+                <div class="footer-column">
+                    <a href="https://github.com/byJoey/yx-auto" target="_blank" class="footer-icon-link" title="原作者 GitHub">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.161 22 16.416 22 12c0-5.523-4.477-10-10-10z"/></svg>
+                    </a>
+                    <a href="https://www.youtube.com/@joeyblog" target="_blank" class="footer-icon-link" title="原作者 YouTube">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                    </a>
+                </div>
+                <div class="footer-divider"></div>
+                <div class="footer-column">
+                    <a href="https://github.com/zeno528/yx-auto-ekko" target="_blank" class="footer-icon-link" title="项目仓库">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.161 22 16.416 22 12c0-5.523-4.477-10-10-10z"/></svg>
+                    </a>
+                    <a href="https://dash.cloudflare.com" target="_blank" class="footer-icon-link" title="Cloudflare Dashboard">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"/></svg>
+                    </a>
+                    <span class="footer-version">v2.0.0</span>
+                </div>
             </div>
+            <p class="footer-desc">简化版优选工具 • 仅用于节点生成</p>
         </div>
     </div>
     
